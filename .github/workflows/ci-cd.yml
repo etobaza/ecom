@@ -1,0 +1,44 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Create virtual environment
+        working-directory: ./ecom
+        run: python -m venv ./venv
+
+      - name: Activate virtual environment
+        working-directory: ./ecom
+        run: . venv/bin/activate
+
+      - name: Install dependencies
+        working-directory: ./ecom
+        run: |
+          pip install --upgrade pip
+          pip install -r ../requirements.txt
+
+      - name: Run Tests
+        working-directory: ./ecom
+        env:
+          DJANGO_SETTINGS_MODULE: ecom.settings
+        run: |
+          . ../venv/bin/activate && python -m pytest

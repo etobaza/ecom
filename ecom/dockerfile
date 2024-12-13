@@ -1,0 +1,14 @@
+FROM python:3.12-slim
+
+
+WORKDIR /ecom
+
+
+COPY ./requirements.txt /ecom/
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+COPY ./ /ecom/
+
+
+EXPOSE 8000

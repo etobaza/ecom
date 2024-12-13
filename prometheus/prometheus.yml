@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'd1'
+    static_configs:
+      - targets: ['d1:8001']
+
+  - job_name: 'd2'
+    static_configs:
+      - targets: ['d2:8002']
+
+  - job_name: 'd3'
+    static_configs:
+      - targets: ['d3:8003']
